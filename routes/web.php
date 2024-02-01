@@ -14,11 +14,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function () {  
+    // foreach ($files as $file) {
+    //     $document = YamlFrontMatter::parseFile($file);
+
+    //     $posts[] = new Post(
+    //         $document->title,
+    //         $document->excerpt,
+    //         $document->date,
+    //         $document->body(),
+    //         $document->slug
+    //     );
+    // }
+
     return view('posts', [
         'posts' => Post::all()
     ]);
+    
 });
+
+// Route::get('/', function () {
+//     return view('posts', [
+//         'posts' => Post::all()
+//     ]);
+// });
 
 Route::get('posts/{post}', function ($slug) {
     return view('post', [
