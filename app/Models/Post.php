@@ -22,18 +22,32 @@ class Post {
     }
 
     public static function all(){
-        $files = File::files(resource_path("posts/"));
+        return cache()->rememberForever('posts.all', function() {
+            $files = File::files(resource_path("posts/"));
     
-        return array_map(function($file) {
-            $document = YamlFrontMatter::parseFile($file);
-            return new Post(
-                $document->title,
-                $document->excerpt,
-                $document->date,
-                $document->body(),
-                $document->slug
-            );
-        }, $files);
+            $posts = array_map(function($file) {
+                $document = YamlFrontMatter::parseFile($file);
+                return new Post(
+                    $document->title,
+                    $document->excerpt,
+                    $document->date,
+                    $document->body(),
+                    $document->slug
+                );
+            }, $files);
+
+            usort($posts, function ($x, $y) {
+                if ($x->date == $y->date) {
+                    return 0;
+                } else if (($x->date > $y->date)) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+            
+            return $posts;
+        });
     }
         
     public static function find($slug) {
