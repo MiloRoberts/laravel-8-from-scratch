@@ -55,6 +55,7 @@ class Post {
         $filteredPosts = array_filter($posts, function($post) use ($slug){
             return $post->slug == $slug;
         });
+        
         return (array_values($filteredPosts))[0];
     }
 }
