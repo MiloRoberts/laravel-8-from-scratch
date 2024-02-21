@@ -11,4 +11,14 @@ class Post extends Model
 
     // protected $guarded = ['id'];
     protected $fillable = ['title', 'excerpt', 'body'];
+
+    // alternative which remoces necessity of :slug in routes
+    
+    // public function getRouteKeyName() {
+    //     return 'slug';
+    // }
+
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
 }
