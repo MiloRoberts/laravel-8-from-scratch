@@ -12,7 +12,10 @@ class Post extends Model
     // protected $guarded = ['id'];
     protected $fillable = ['title', 'excerpt', 'body'];
 
-    // alternative which remoces necessity of :slug in routes
+    // default for every POST query performed
+    protected $with = ['category', 'author'];
+
+    // alternative which removes necessity of :slug in routes
     
     // public function getRouteKeyName() {
     //     return 'slug';
@@ -22,7 +25,7 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function author() {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
